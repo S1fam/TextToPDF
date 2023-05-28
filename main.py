@@ -20,23 +20,8 @@ for file in file_list:
 
     pdf.set_font("Helvetica", size=12)
     with open(f"files/{file}") as text_file:
-        lines = text_file.readlines()  # first line is title
+        content = text_file.read()  # first line is title
 
-    for line in lines:
-        words = line.strip().split(" ")
-        current_x = pdf.get_x()
-
-        for word in words:
-            word_width = pdf.get_string_width(s=word)
-
-            if (current_x + word_width) > 200:
-                pdf.ln()
-                pdf.set_x(10)
-
-            pdf.cell(word_width + 1, h=5, txt=word, ln=0)
-
-            current_x = pdf.get_x() + word_width
-
-        pdf.ln()
+    pdf.multi_cell(w=0, h=6, txt=content)
 
 pdf.output("output.pdf")
